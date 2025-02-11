@@ -1,12 +1,13 @@
-package ee.jaemaa.veebipood;
+package ee.Jaemaa.competition;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class VeebipoodApplication {
+public class CompetitionApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(VeebipoodApplication.class, args);
+		SpringApplication.run(CompetitionApplication.class, args);
 	}
+
 }
