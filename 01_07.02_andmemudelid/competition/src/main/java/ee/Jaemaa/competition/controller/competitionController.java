@@ -1,13 +1,28 @@
 package ee.Jaemaa.competition.controller;
 
+import ee.Jaemaa.competition.repository.competitionRepository;
+import ee.Jaemaa.competition.entity.competitor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
+
+import java.util.List;
 
 @RestController
 public class competitionController {
 
+    @Autowired
+    competitionRepository competitionRepository;
+
     @GetMapping("competition")
-    public String competition() {
-        return "Hello World!";
+    public List<competitor> getCompetitor(){
+        return competitionRepository.findAll();
+    }
+    @PostMapping("competition")
+    public List<competitor> addCompetitor(@RequestBody competitor competitor) {
+        competitionRepository.save(competitor);
+        return competitionRepository.findAll();
     }
 }
