@@ -11,15 +11,13 @@ import lombok.Setter;
 
 @Getter
 @Setter
-@Entity
 @NoArgsConstructor
 @AllArgsConstructor
-public class competitor {
+@Entity
+public class Result {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private String firstName;
-    private String lastName;
-    private String country;
-    private Integer age;
+    private String event;
+    private String result; // äkki peaks panema Integer
 }
