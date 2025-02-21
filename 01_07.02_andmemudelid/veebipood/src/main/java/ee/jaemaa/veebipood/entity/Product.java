@@ -1,9 +1,6 @@
 package ee.jaemaa.veebipood.entity;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -42,4 +39,11 @@ public class Product {
     private String image;
     private boolean active;
 
+    //@ManyToMany
+    //@OneToMany
+    //@ManyToOne
+    //OneToOne -> Siis kui teen nt usery ja tema kontakt andmed
+
+    @ManyToOne
+    private Category category;
 }
