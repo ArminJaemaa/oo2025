@@ -29,8 +29,8 @@ public class resultController {
         resultRepository.save(result);
         return resultRepository.findAll();
     }
-    @GetMapping("results/{id}")
-    public Result getResult(@PathVariable Long id) {
-        return resultRepository.findById(id).orElseThrow();
+    @GetMapping("/results/competitor/{name}")
+    public List<Result> getResultsByCompetitorName(@PathVariable String name) {
+        return resultRepository.findByCompetitor_firstName(name);
     }
 }
