@@ -20,4 +20,7 @@ public class CompetitionEvent {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String name;
+    private double A;
+    private double B;
+    private double C;
 }

@@ -21,5 +21,5 @@ public class Result {
     private CompetitionEvent event;
     @ManyToOne
     private competitor competitor;
-    private String result; // äkki peaks panema Integer
+    private double result; // äkki peaks panema Integer või double
 }

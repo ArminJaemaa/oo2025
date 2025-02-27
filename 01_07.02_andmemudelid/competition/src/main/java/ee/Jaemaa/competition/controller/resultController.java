@@ -1,25 +1,64 @@
 package ee.Jaemaa.competition.controller;
 
+import ee.Jaemaa.competition.entity.CompetitionEvent;
 import ee.Jaemaa.competition.entity.Result;
+import ee.Jaemaa.competition.repository.CompetitionEventRepository;
 import ee.Jaemaa.competition.repository.ResultRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
+
+import static java.lang.Math.pow;
 
 @RestController
 public class resultController {
     @Autowired
     ResultRepository resultRepository;
+    @Autowired
+    private CompetitionEventRepository competitionEventRepository;
 
     @GetMapping("results")
     public List<Result> getResults() {
         return resultRepository.findAll();
     }
+
     @PostMapping("results")
     public List<Result> addResult(@RequestBody Result result) {
-        resultRepository.save(result);
-        return resultRepository.findAll();
+        if (result.getEvent() == null || result.getEvent().getName() == null) {
+            throw new RuntimeException("Event name is required");
+        }
+
+        Optional<CompetitionEvent> event = competitionEventRepository.findByName(result.getEvent().getName());
+        CompetitionEvent eventEntity = event.orElseThrow(() -> new RuntimeException("Event not found"));
+
+        result.setEvent(eventEntity);
+
+        double a = event.get().getA();
+        double b = event.get().getB();
+        double c = event.get().getC();
+        double resultValue = result.getResult();
+
+        if (result.getEvent().getName().equals("100m jooks") ||result.getEvent().getName().equals("400m jooks")
+        || result.getEvent().getName().equals("100m tõkkejooks")|| result.getEvent().getName().equals("1500m jooks") ) {
+
+            double y = (b - resultValue);
+            double score = a * Math.pow(y, c);
+            result.setResult(Math.round(score));
+
+            resultRepository.save(result);
+            return resultRepository.findAll();
+
+        } else {
+            double y = (resultValue - b);
+            double score = a * Math.pow(y, c);
+            result.setResult(Math.round(score));
+
+            resultRepository.save(result);
+            return resultRepository.findAll();
+        }
+
     }
     @PutMapping("results")
     public List<Result> editResult(@RequestBody Result result) {
