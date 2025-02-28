@@ -2,6 +2,7 @@ package ee.Jaemaa.competition.controller;
 
 import ee.Jaemaa.competition.entity.CompetitionEvent;
 import ee.Jaemaa.competition.entity.Result;
+import ee.Jaemaa.competition.entity.competitor;
 import ee.Jaemaa.competition.repository.CompetitionEventRepository;
 import ee.Jaemaa.competition.repository.ResultRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,6 +19,8 @@ public class resultController {
     ResultRepository resultRepository;
     @Autowired
     private CompetitionEventRepository competitionEventRepository;
+    @Autowired
+    private ee.Jaemaa.competition.repository.competitionRepository competitionRepository;
 
     @GetMapping("results")
     public List<Result> getResults() {
@@ -40,8 +43,8 @@ public class resultController {
         double c = event.get().getC();
         double resultValue = result.getResult();
 
-        if (result.getEvent().getName().equals("100m jooks") ||result.getEvent().getName().equals("400m jooks")
-        || result.getEvent().getName().equals("100m tõkkejooks")|| result.getEvent().getName().equals("1500m jooks") ) {
+        if (result.getEvent().getName().equals("100m jooks") || result.getEvent().getName().equals("400m jooks")
+                || result.getEvent().getName().equals("100m tõkkejooks") || result.getEvent().getName().equals("1500m jooks")) {
 
             double y = (b - resultValue);
             double score = a * Math.pow(y, c);
@@ -60,6 +63,7 @@ public class resultController {
         }
 
     }
+
     @PutMapping("results")
     public List<Result> editResult(@RequestBody Result result) {
         if (result.getId() == null) {
@@ -68,8 +72,23 @@ public class resultController {
         resultRepository.save(result);
         return resultRepository.findAll();
     }
+
     @GetMapping("/results/competitor/{name}")
     public List<Result> getResultsByCompetitorName(@PathVariable String name) {
         return resultRepository.findByCompetitor_firstName(name);
     }
+    /* @GetMapping("/results/competitor/{name}/punktid")
+    public List<Result> getAllPointsByCompetitorName(@PathVariable String name) {
+        int punktid = 0;
+        //List<Result> nimi = resultRepository.findByCompetitor_firstName(name);
+        Optional<competitor> nimi = competitionRepository.findByName(name);
+        for (int i = 0; i < resultRepository.findAll().size(); i++) {
+            punktid += (int) resultRepository.findByCompetitor_firstName(nimi).get(i).getResult();
+
+
+        }
+        System.out.println(punktid);
+        return resultRepository.findAll();
+    }
+    */
 }
