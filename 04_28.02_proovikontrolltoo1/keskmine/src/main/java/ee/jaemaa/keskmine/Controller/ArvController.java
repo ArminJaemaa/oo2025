@@ -8,8 +8,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 @RestController
 public class ArvController {
@@ -26,29 +26,28 @@ public class ArvController {
         return arvRepository.findAll();
     }
     @GetMapping("arvud/summa")
-    public List<Arv> getArvudSumma() {
+    public int getArvudSumma() {
         int summa = 0;
         for (int i = 0; i < arvRepository.findAll().size(); i++) {
             summa += arvRepository.findAll().get(i).getArv();
         }
         System.out.println(summa);
-        return arvRepository.findAll();
+        return summa;
     }
     @GetMapping("arvud/keskmine")
-    public List<Arv> getArvudKeskmine() {
-        double keskmine = 0;
+    public double getArvudKeskmine() {
         int summa = 0;
         int scanner = 0;
         for (int i = 0; i < arvRepository.findAll().size(); i++) {
             scanner ++;
             summa += arvRepository.findAll().get(i).getArv();
         }
-        keskmine = (double) summa / scanner;
+        double keskmine = (double) summa / scanner;
         System.out.println(keskmine);
-        return arvRepository.findAll();
+        return keskmine;
     }
     @GetMapping("arvud/suurim")
-    public List<Arv> getArvudSuurim() {
+    public int getArvudSuurim() {
         int suurim = 0;
         for (int i = 0; i < arvRepository.findAll().size(); i++) {
             if (arvRepository.findAll().get(i).getArv() > suurim) {
@@ -56,6 +55,21 @@ public class ArvController {
             }
         }
         System.out.println(suurim);
-        return arvRepository.findAll();
+        return suurim;
+    }
+    @GetMapping("libisevKeskmine")
+    public List<Double> getLibisevKeskmine() {
+        List<Arv> arvud = arvRepository.findAll();
+        List<Double> libisevKeskmine = new ArrayList<>();
+        for (int i = 0; i < arvud.size() - 2; i++) {
+            double keskmine = (arvud.get(i).getArv()
+                    + arvud.get(i + 1).getArv()
+                    + arvud.get(i + 2).getArv()/ 3.0);
+            libisevKeskmine.add(keskmine);
+        }
+        System.out.println(libisevKeskmine);
+        return libisevKeskmine;
+
+
     }
 }
