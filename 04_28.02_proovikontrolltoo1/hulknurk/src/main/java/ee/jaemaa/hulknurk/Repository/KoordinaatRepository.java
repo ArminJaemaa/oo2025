@@ -6,7 +6,5 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import java.util.List;
 
 public interface KoordinaatRepository extends JpaRepository<Koordinaat, Long> {
-    int getKoordinaatByX(Double x);
-
-    List<Koordinaat> x(Double x);
+    List<Koordinaat> findAll();
 }
