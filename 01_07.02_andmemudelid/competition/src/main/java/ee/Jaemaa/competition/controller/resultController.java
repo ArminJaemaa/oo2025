@@ -13,6 +13,7 @@ import java.util.Optional;
 
 import static java.lang.Math.pow;
 
+@CrossOrigin(origins = "http://localhost:5173")
 @RestController
 public class resultController {
     @Autowired
