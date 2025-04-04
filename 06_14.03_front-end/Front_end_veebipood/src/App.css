@@ -1,6 +1,20 @@
 #products{
   margin: 10px;
 }
+button{
+  background-color:black;
+  color: white;
+}
+
+button:hover{
+  transition: font-size 1s;
+  background-color:green;
+  font-size: 20px;
+}
+
+button:disabled{
+  background-color: grey;
+}
 
 h1{
   color: rgb(30, 0, 113);

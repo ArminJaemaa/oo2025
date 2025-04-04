@@ -27,6 +27,11 @@ function Arrayd() {
     {autod.map(auto => <div key={auto.mark+auto.mudel}>
       {auto.mark} - {auto.mudel} ({auto.aasta})
       </div> )}
+      <br/>
+      <div>SWAGGER kui tahta teada kõiki päringuid kuidas teha andmebaasi</div>
+      <div>https://medium.com/@f.s.a.kuzman/using-swagger-3-in-spring-boot-3-c11a483ea6dc</div>
+      <div>http://localhost:8080/swagger-ui/index.html
+      </div>
     </div>
   )
 }
