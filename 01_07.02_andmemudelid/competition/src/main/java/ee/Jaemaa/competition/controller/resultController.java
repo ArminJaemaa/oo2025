@@ -6,6 +6,8 @@ import ee.Jaemaa.competition.entity.competitor;
 import ee.Jaemaa.competition.repository.CompetitionEventRepository;
 import ee.Jaemaa.competition.repository.ResultRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -92,4 +94,12 @@ public class resultController {
         return resultRepository.findAll();
     }
     */
+
+    @GetMapping("/competitor-result")
+    public Page<Result> getResultsByCompetitor(@RequestParam Long competitorId, Pageable pageable) {
+        if (competitorId == -1) {
+            return resultRepository.findAll(pageable);
+        }
+        return resultRepository.findByCompetitor_Id(competitorId, pageable);
+    }
 }

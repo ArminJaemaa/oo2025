@@ -16,9 +16,9 @@ function Competitor() {
     <h1>Võistlejad</h1>
 
     <ol className='võistlejad'>
-      {competitor.map(competitor => <div key={competitor.id}>
-        <li>{competitor.firstName} {competitor.lastName} ({competitor.age}, {competitor.country} )</li>
-      </div> )}
+      {competitor.map(competitor => <li id="võistleja" key={competitor.id}>
+        {competitor.firstName} {competitor.lastName} ({competitor.age}, {competitor.country} )
+      </li> )}
     </ol>
 
     </div>

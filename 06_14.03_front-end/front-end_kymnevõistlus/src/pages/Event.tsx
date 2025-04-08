@@ -14,7 +14,7 @@ function Event() {
   return (
     <div>
         <h1>Võistlusalad</h1>
-        <div>
+        <div id="võistlusalad">
             {event.map(event => <div key={event.id}>
                 ({event.name})
         </div> )}

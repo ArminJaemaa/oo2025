@@ -1,5 +1,22 @@
 #root {
   margin: 0 auto;
-  text-align: center;
   width: 100vw;
+}
+.võistlejad{
+  display: absolute;
+  padding-left: 40%;
+}
+#võistlusalad{
+  text-align: center;
+}
+#tulemused{
+  text-align: center;
+}
+button{
+  background-color: rgb(224, 91, 91);
+  color: rgb(0, 0, 0);
+}
+button:disabled{
+  background-color: rgb(255, 255, 255);
+  color: red;
 }
