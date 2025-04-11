@@ -31,6 +31,8 @@ function Arrayd() {
       <div>SWAGGER kui tahta teada kõiki päringuid kuidas teha andmebaasi</div>
       <div>https://medium.com/@f.s.a.kuzman/using-swagger-3-in-spring-boot-3-c11a483ea6dc</div>
       <div>http://localhost:8080/swagger-ui/index.html</div>
+      <div>https://www.npmjs.com/package/react-toastify</div>
+      <div>https://firebase.google.com</div>
     </div>
   )
 }

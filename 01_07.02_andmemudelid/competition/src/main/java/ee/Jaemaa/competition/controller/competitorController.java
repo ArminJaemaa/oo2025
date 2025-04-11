@@ -23,4 +23,9 @@ public class competitorController {
         competitionRepository.save(competitor);
         return competitionRepository.findAll();
     }
+    @DeleteMapping("competition/{id}")
+    public List<competitor> deleteCompetitor(@PathVariable Long id) {
+        competitionRepository.deleteById(id);
+        return competitionRepository.findAll();
+    }
 }

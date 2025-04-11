@@ -62,7 +62,7 @@ function Result() {
         )}
         <button disabled={page===0} onClick={()=>updatePage(page-1)}>eelmine</button>
         <span>{page+1}</span>
-        <button disabled={page===Math.ceil(TotalResults/resultsPerPage-1)} onClick={()=>updatePage(page+1)}>Järgmine</button>
+        <button disabled={page>=totalPages} onClick={()=>updatePage(page+1)}>Järgmine</button>
     </div>
   )
 }

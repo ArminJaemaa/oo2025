@@ -20,3 +20,22 @@ button:disabled{
   background-color: rgb(255, 255, 255);
   color: red;
 }
+
+table{
+  border: 2px solid black;
+  margin: auto;
+}
+
+#addCompetitor{
+  display: flex;
+  flex-direction: column;
+}
+
+input{
+  max-width: 20%;
+}
+
+#addCompetitorButton{
+  max-width: 20%;
+  margin-top: 20px;
+}

@@ -1,7 +1,7 @@
 //rfce snippet
 // terminalis ( npm install react-router-dom )!!
 
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { category } from "../models/category";
 import { product } from "../models/products";
 
@@ -12,7 +12,7 @@ function MainPage() {
   const [products, setProducts] = useState<product[]>([]);
   const [totalProducts, setTotalProducts] = useState(0)
   const [totalPages, setTotalPages] = useState(0)
-  const productsByPage = 2;
+  const [productsByPage, setProductsByPage] = useState(1);
   const [page, setPage] = useState(0);
   const [activeCategory, setActiveCategory] = useState(-1);
 
@@ -23,30 +23,33 @@ function MainPage() {
             .then(res=>res.json())             // Kogu tagastus: headers, status code.
             .then(json=>setKategooriad(json))     // body: sisu mille tagastab back-end.
   }, []);
-  useEffect(() => {
-/*     fetch('http://localhost:8080/products')
-            .then(res=>res.json())
-            .then(json=>setProducts(json)) */
-    showByCategory(-1,0)
-  }, []);
 
-  function showByCategory(categoryId: number, currentPage:number){
+  const showByCategory = useCallback((categoryId: number, currentPage:number)=>{
     setActiveCategory(categoryId)
     setPage(currentPage);
     fetch('http://localhost:8080/category-products?categoryId='+categoryId +
-       "&size="+productsByPage+"&page="+currentPage)
+       "&size="+productsByPage+
+       "&page="+currentPage)
     .then(res=>res.json())
     .then(json=>{
       setProducts(json.content);
       setTotalProducts(json.totalElements);
       setTotalPages(json.totalPages);
     }) //mida set'in see muutub. Ehk kui panna setKategooria, siis muutvad kategooriad ja tänu sellele ka nupud.
+  },[productsByPage]);
 
-  }
+  useEffect(() => {
+    /*     fetch('http://localhost:8080/products')
+                .then(res=>res.json())
+                .then(json=>setProducts(json)) */
+        showByCategory(-1,0)
+      }, [showByCategory]);
 
   function updatePage(newPage:number){
     showByCategory(activeCategory, newPage);
   }
+
+  const productsByPageRef = useRef<HTMLSelectElement>(null);   //HTML-i inputiga/selectiga siduiseks
 
 /*   const showByCategory = () => {
       on kaks võimalust teha funkstioone.
@@ -55,7 +58,14 @@ function MainPage() {
   return (
     <div className="mainPageContainer">
 
-{kategooriad.map(kategooria =>
+    <select ref={productsByPageRef}
+     onChange={() => setProductsByPage(Number(productsByPageRef.current?.value))}>
+      <option>1</option>
+      <option>2</option>
+      <option>3</option>
+    </select>
+
+      {kategooriad.map(kategooria =>
        <button key={kategooria.id} onClick={()=>showByCategory(kategooria.id,0)}>
       {kategooria.name}{kategooria.active}
     </button>)}
@@ -72,7 +82,7 @@ function MainPage() {
           </div> )}
           <button disabled={page===0} onClick={()=>updatePage(page-1)}>eelmine</button>
           <span>{page+1}</span>
-          <button disabled={page===Math.ceil(totalProducts/productsByPage-1)} onClick={()=>updatePage(page+1)}>Järgmine</button>
+          <button disabled={page>=totalPages-1} onClick={()=>updatePage(page+1)}>Järgmine</button>
     </div>
     
   )

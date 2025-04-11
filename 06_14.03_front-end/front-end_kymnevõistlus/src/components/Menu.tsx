@@ -1,3 +1,4 @@
+import { NavDropdown } from 'react-bootstrap';
 import Container from 'react-bootstrap/Container';
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
@@ -14,6 +15,10 @@ function BasicExample() {
             <Nav.Link as={Link} to="/competitors">Võistlejad</Nav.Link>
             <Nav.Link as={Link} to="/events">Võistlusalad</Nav.Link>
             <Nav.Link as={Link} to="/results">Tulemused</Nav.Link>
+            <NavDropdown title="Manage">
+            <NavDropdown.Item as={Link} to="/ManageCompetitors">Manage Competitors</NavDropdown.Item>
+            </NavDropdown>
+
           </Nav>
         </Navbar.Collapse>
       </Container>

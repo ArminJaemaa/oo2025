@@ -66,3 +66,7 @@ button:focus-visible {
     background-color: #f9f9f9;
   }
 }
+table{
+  border: 3px solid black;
+  margin: auto;   /* Kui on määratud height ja width siis paneb keskele */
+}
