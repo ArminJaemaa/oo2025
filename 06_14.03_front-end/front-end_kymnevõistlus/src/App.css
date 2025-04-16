@@ -29,10 +29,11 @@ table{
 #addCompetitor{
   display: flex;
   flex-direction: column;
+  position: absolute;
 }
 
-input{
-  max-width: 20%;
+#addCompetitorButton{
+  min-width: 300px;
 }
 
 #addCompetitorButton{

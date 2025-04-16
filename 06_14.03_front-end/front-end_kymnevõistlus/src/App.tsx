@@ -7,6 +7,7 @@ import Competitor from './pages/Competitor'
 import Result from './pages/Result'
 import Menu from './components/Menu'
 import ManageCompetitors from './pages/ManageCompetitors'
+import ManageResults from './pages/ManageResults'
 
 function App() {
 
@@ -21,6 +22,7 @@ function App() {
 
             <Route path='/results' element={ < Result /> } />
             <Route path='/manageCompetitors' element={ < ManageCompetitors /> } />
+            <Route path='/manageResults' element={ <ManageResults />} />
 
 
             <Route path='/*' element={ <div>Page Not Found</div>} /> {/* saab ka HTML-i otse kirjutada sisse. */}

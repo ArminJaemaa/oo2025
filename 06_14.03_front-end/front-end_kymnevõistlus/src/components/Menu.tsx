@@ -17,6 +17,7 @@ function BasicExample() {
             <Nav.Link as={Link} to="/results">Tulemused</Nav.Link>
             <NavDropdown title="Manage">
             <NavDropdown.Item as={Link} to="/ManageCompetitors">Manage Competitors</NavDropdown.Item>
+            <NavDropdown.Item as={Link} to="/ManageResults">ManageResults</NavDropdown.Item>
             </NavDropdown>
 
           </Nav>
