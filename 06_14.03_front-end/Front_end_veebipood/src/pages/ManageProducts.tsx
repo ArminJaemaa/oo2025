@@ -59,7 +59,6 @@ function ManageProducts() {
     }
     })
   }
-
  
   return (
     <div>

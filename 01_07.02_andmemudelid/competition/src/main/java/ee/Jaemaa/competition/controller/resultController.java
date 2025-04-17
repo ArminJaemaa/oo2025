@@ -102,4 +102,10 @@ public class resultController {
         }
         return resultRepository.findByCompetitor_Id(competitorId, pageable);
     }
+
+    @DeleteMapping("/results/{id}")
+    public List<Result> deleteResult(@PathVariable Long id) {
+        resultRepository.deleteById(id);
+        return resultRepository.findAll();
+    }
 }
