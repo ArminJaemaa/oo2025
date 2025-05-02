@@ -54,8 +54,6 @@ function ManageCompetitors() {
       const countryRef = useRef<HTMLInputElement>(null);
       const ageRef = useRef<HTMLInputElement>(null);
 
-
-
   return (
     <div>
 

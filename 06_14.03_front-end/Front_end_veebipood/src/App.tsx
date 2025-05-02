@@ -7,7 +7,7 @@
 
 
 import './App.css'
-import { Route, Routes } from 'react-router-dom';
+import { Route, Routes } from 'react-router-dom';  // vaja importida!!
 import ManageProducts from './pages/ManageProducts.tsx';
 import MainPage from './pages/MainPage.tsx';
 import ManageCategories from './pages/ManageCategories.tsx';
@@ -17,6 +17,9 @@ import Arrayd from './pages/Arrayd.tsx';
 import Menu from './components/Menu.tsx';
 import Login from './pages/Login.tsx';
 import SignUp from './pages/SignUp.tsx';
+import EditProduct from './pages/EditProduct.tsx';
+import SingleProduct from './pages/SingleProduct.tsx';
+import Map from './pages/Map.tsx';
 
 function App() {
 
@@ -33,12 +36,15 @@ function App() {
             <Route path='/' element={ < MainPage /> } />
             <Route path='/admin/products' element={ < ManageProducts /> } />
             <Route path='/admin/categories' element={ < ManageCategories /> } />
+            <Route path='/admin/edit-product/:productId' element={ < EditProduct /> } />
 
             <Route path='/orders' element={ < Orders /> } />
             <Route path='/cart' element={ < Cart /> } />
             <Route path='/arrays' element={ < Arrayd /> } />
             <Route path='/login' element={ < Login /> } />
             <Route path='/signup' element={ < SignUp /> } />
+            <Route path='/product/:productId' element={ < SingleProduct /> } />
+            <Route path='/map' element={<Map/>}/>
 
             <Route path='/*' element={ <div>Page Not Found</div>} /> {/* saab ka HTML-i otse kirjutada sisse. */}
           </Routes>

@@ -1,14 +1,15 @@
-import React, { useEffect, useRef } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { result } from '../models/result'
 import { events } from '../models/events';
 import { competitor } from '../models/competitor';
 import { ToastContainer, toast } from 'react-toastify';
+import { Link } from 'react-router-dom';
 
 function ManageResults() {
 
-  const [results, setResults] = React.useState<result[]>([]);
-  const [events, setEvents] = React.useState<events[]>([]);
-  const [competitors, setCompetitor] = React.useState<competitor[]>([]);
+  const [results, setResults] = useState<result[]>([]);
+  const [events, setEvents] = useState<events[]>([]);
+  const [competitors, setCompetitor] = useState<competitor[]>([]);
 
       useEffect(() => {
           fetch("http://localhost:8080/results")
@@ -66,45 +67,47 @@ function ManageResults() {
   return (
     <div>
         <h1>Manage results</h1>
-        <p>Lisa uus tulemus</p>
-        <label>Name</label>
-        <select ref={nameRef}>
-          {competitors.map(competitor => <option value={competitor.id}>{competitor.firstName}</option>  )}
-        </select>
-        <br />
-        <label>Event</label>
-        <select ref={eventRef}>
-          {events.map(event => <option value={event.name}>{event.name}</option> )}
-        </select>
-        <br />
-        <label>Result</label>
-        <input type="number" ref={resultRef} placeholder='Lisa siia tulemus' />
-        <div>Tulemus arvutatakse ise automaatselt punktideks</div>
-        <button onClick={()=>addResult()} >Add result</button>
+        <div id='addResult'>
+          <p>Lisa uus tulemus</p>
+          <label>Name</label>
+          <select ref={nameRef}>
+            {competitors.map(competitor => <option key={competitor.id} value={competitor.id}>{competitor.firstName}</option>  )}
+          </select>
+          <br />
+          <label>Event</label>
+          <select ref={eventRef}>
+            {events.map(event => <option key={event.id} value={event.name}>{event.name}</option> )}
+          </select>
+          <br />
+          <label>Result</label>
+          <input type="number" ref={resultRef} placeholder='Lisa siia tulemus' />
+          <div>Tulemus arvutatakse ise automaatselt punktideks</div>
+          <button onClick={()=>addResult()} >Add result</button>
+        </div>
         <br /><br />
         <table>
             <thead>
                 <tr>
                     <th>Competitor</th>
-                    <br />
                     <th>Event</th>
-                    <br />
                     <th>Result</th>
-                    <br />
+                    <th>Muuda</th>
                     <th></th>
-                </tr>
+                    </tr>
             </thead>
             <tbody>
                 {results.map(result => (
                     <tr key={result.id}>
                         <td>{result.competitor.firstName}</td>
-                        <br />
                         <td>{result.event.name}</td>
-                        <br />
                         <td>{result.result}</td>
-                        <br />
                         <td>
                             <button onClick={()=>deleteResult(result.id)}>Delete</button>
+                        </td>
+                        <td>
+                          <Link to={"/edit-result/" + result.id}>
+                          <button>Muuda</button>
+                          </Link>
                         </td>
                     </tr>
                 ))}

@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { competitor } from "../models/competitor";
+import { Link } from "react-router-dom";
 
 function Competitor() {
 
@@ -17,8 +18,12 @@ function Competitor() {
 
     <ol className='võistlejad'>
       {competitor.map(competitor => <li id="võistleja" key={competitor.id}>
-        {competitor.firstName} {competitor.lastName} ({competitor.age}, {competitor.country} )
-      </li> )}
+        {competitor.firstName} {competitor.lastName}
+        <Link to={"/competitor/" + competitor.id}>
+        <button className="competitorViewButton">Vaata</button>
+        </Link>
+      </li>
+     )}
     </ol>
 
     </div>

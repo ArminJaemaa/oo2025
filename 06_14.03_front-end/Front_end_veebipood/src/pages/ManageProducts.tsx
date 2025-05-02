@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import { product } from "../models/products";
 import { category } from "../models/category";
 import { ToastContainer, toast } from 'react-toastify';
+import { Link } from "react-router-dom";
  
 function ManageProducts() {
  
@@ -71,7 +72,7 @@ function ManageProducts() {
       <label>Category</label> <br />
       {/* <input ref={categoryRef} type="number" /><br /> */}
       <select ref={categoryRef}>
-        {categories.map(category => <option value={category.id}>{category.name}</option>)}
+        {categories.map(category => <option key={category.id} value={category.id}>{category.name}</option>)}
         </select> <br />
       <label>Image</label> <br />
       <input ref={imageRef} type="text" /> <br />
@@ -85,8 +86,10 @@ function ManageProducts() {
             <th>ID</th>
             <th>Name</th>
             <th>Price</th>
-            <th>Image</th>
             <th>Category</th>
+            <th>Active</th>
+            <th></th>
+            <th></th>
           </tr>
         </thead>
         <tbody>
@@ -95,12 +98,15 @@ function ManageProducts() {
               <td>{product.id}</td>
               <td>{product.name}</td>
               <td>{product.price}€</td>
-              <td>
-                <img src={product.image} alt={String(product.id)} width="50" height="50" />
-              </td>
               <td>{product.category?.name}</td>
+              <td>{product.active ? "Yes" : "No"}</td>
               <td>
               <button onClick={() => deleteProduct(product.id)}>Delete</button>
+              </td>
+              <td>
+                <Link to={"/admin/edit-product/" + product.id}>
+                  <button> Muuda </button>
+                </Link>
               </td>
             </tr>
           ))}

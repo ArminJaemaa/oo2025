@@ -74,7 +74,7 @@ return (
           <th>ID</th>
           <th>Name</th>
           <th>Active</th>
-          <th>Actions</th>
+          <th></th>
         </tr>
       </thead>
       <tbody>

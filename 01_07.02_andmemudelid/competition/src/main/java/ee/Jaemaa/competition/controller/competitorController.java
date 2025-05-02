@@ -23,6 +23,17 @@ public class competitorController {
         competitionRepository.save(competitor);
         return competitionRepository.findAll();
     }
+    @GetMapping("competition/{id}")
+    public competitor getCompetitor(@PathVariable Long id) {
+        return competitionRepository.findById(id).orElseThrow();
+    }
+
+    @PutMapping("competition/{id}")
+    public competitor updateCompetitor(@RequestBody competitor competitor, @PathVariable Long id) {
+        competitionRepository.save(competitor);
+        return competitionRepository.findById(id).orElseThrow();
+    }
+
     @DeleteMapping("competition/{id}")
     public List<competitor> deleteCompetitor(@PathVariable Long id) {
         competitionRepository.deleteById(id);

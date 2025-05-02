@@ -4,8 +4,14 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import { category } from "../models/category";
 import { product } from "../models/products";
+import { Link } from "react-router-dom";
+import { useTranslation } from "react-i18next";
+
+
 
 function MainPage() {
+
+  const { t } = useTranslation();
 
      // muutuja - HTML   muudab muutuja + HTMLi     sulgude sees - algväärtus
   const [kategooriad, setKategooriad] = useState<category[]>([]);
@@ -15,6 +21,8 @@ function MainPage() {
   const [productsByPage, setProductsByPage] = useState(1);
   const [page, setPage] = useState(0);
   const [activeCategory, setActiveCategory] = useState(-1);
+  const [sort, setSort] = useState("id,asc");
+  const productsByPageRef = useRef<HTMLSelectElement>(null);   //HTML-i inputiga/selectiga siduiseks
 
   //uef --> enter või tab ---> onload funktsioon, funktsioon läheb kohe käima kui lehele minna.
 
@@ -29,34 +37,42 @@ function MainPage() {
     setPage(currentPage);
     fetch('http://localhost:8080/category-products?categoryId='+categoryId +
        "&size="+productsByPage+
-       "&page="+currentPage)
+       "&page="+currentPage +
+       "&sort=" + sort)
     .then(res=>res.json())
     .then(json=>{
       setProducts(json.content);
       setTotalProducts(json.totalElements);
       setTotalPages(json.totalPages);
     }) //mida set'in see muutub. Ehk kui panna setKategooria, siis muutvad kategooriad ja tänu sellele ka nupud.
-  },[productsByPage]);
+  },[productsByPage, sort]);
 
   useEffect(() => {
     /*     fetch('http://localhost:8080/products')
                 .then(res=>res.json())
                 .then(json=>setProducts(json)) */
-        showByCategory(-1,0)
-      }, [showByCategory]);
+        showByCategory(activeCategory,0)
+      }, [showByCategory,activeCategory]);
 
   function updatePage(newPage:number){
     showByCategory(activeCategory, newPage);
   }
 
-  const productsByPageRef = useRef<HTMLSelectElement>(null);   //HTML-i inputiga/selectiga siduiseks
-
 /*   const showByCategory = () => {
       on kaks võimalust teha funkstioone.
   } */
+
+      //http://localhost:8080/category-products?categoryId=1&page=0&size=2&sort=price,desc
     
   return (
     <div className="mainPageContainer">
+
+    <button onClick={()=>setSort("id,asc")}>Sorteeri vanemad enne</button>
+    <button onClick={()=>setSort("id,desc")}>Sorteeri uuemad enne</button>
+    <button onClick={()=>setSort("name,asc")}>Sorteeri A-Z</button>
+    <button onClick={()=>setSort("name,desc")}>Sorteeri Z-A</button>
+    <button onClick={()=>setSort("price,asc")}>Sorteeri odavamad enne</button>
+    <button onClick={()=>setSort("price,desc")}>Sorteeri kallimad enne</button>
 
     <select ref={productsByPageRef}
      onChange={() => setProductsByPage(Number(productsByPageRef.current?.value))}>
@@ -79,10 +95,15 @@ function MainPage() {
       <div id="products" key={product.id}>
         <div>({product.category?.name})</div> {/* vaja panna category taha '?' kui võib olla categoty juures kuskil NULL */}
          {product.name} - {product.price} {product.active}
+         {
+         <Link to={"product/" + product.id }>
+          <button>Vaata</button>
+         </Link>
+         }
           </div> )}
-          <button disabled={page===0} onClick={()=>updatePage(page-1)}>eelmine</button>
+          <button disabled={page===0} onClick={()=>updatePage(page-1)}>{t("mainPage.järgmine")}</button>
           <span>{page+1}</span>
-          <button disabled={page>=totalPages-1} onClick={()=>updatePage(page+1)}>Järgmine</button>
+          <button disabled={page>=totalPages-1} onClick={()=>updatePage(page+1)}>{t("mainPage.eelmine")}</button>
     </div>
     
   )

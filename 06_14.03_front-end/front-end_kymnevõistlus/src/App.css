@@ -3,7 +3,8 @@
   width: 100vw;
 }
 .võistlejad{
-  display: absolute;
+  display: flex;
+  flex-direction: column;
   padding-left: 40%;
 }
 #võistlusalad{
@@ -13,7 +14,7 @@
   text-align: center;
 }
 button{
-  background-color: rgb(224, 91, 91);
+  background-color: rgb(164, 195, 23);
   color: rgb(0, 0, 0);
 }
 button:disabled{
@@ -27,9 +28,15 @@ table{
 }
 
 #addCompetitor{
+  margin-left: 10px;
   display: flex;
   flex-direction: column;
   position: absolute;
+}
+
+#addResult{
+  position: absolute;
+  margin-left: 30px;
 }
 
 #addCompetitorButton{
@@ -39,4 +46,12 @@ table{
 #addCompetitorButton{
   max-width: 20%;
   margin-top: 20px;
+}
+
+.competitorViewButton{
+  margin-left: 10px;
+}
+
+#singleCompetitor{
+  margin-left: 30%;
 }

@@ -108,4 +108,9 @@ public class resultController {
         resultRepository.deleteById(id);
         return resultRepository.findAll();
     }
+
+    @GetMapping("results/{id}")
+    public Result getResult(@PathVariable Long id) {
+        return resultRepository.findById(id).orElseThrow();
+    }
 }
