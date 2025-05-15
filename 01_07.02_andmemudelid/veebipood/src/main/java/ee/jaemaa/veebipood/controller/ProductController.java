@@ -101,7 +101,7 @@ public class ProductController {
 
     @GetMapping("/category-products")
     public Page<Product> getCategoryProducts(@RequestParam Long categoryId, Pageable pageable) {
-        if(categoryId == -1) {
+        if (categoryId == -1) {
             return productRepository.findAll(pageable);
         }
         return productRepository.findByCategory_Id(categoryId, pageable);
