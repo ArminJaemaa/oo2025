@@ -6,7 +6,9 @@ function AdministratorList() {
   const [words, setWords] = useState<Word[]>([]);
   const [admins, setAdmins] = useState<Administrator[]>([]);
   const [selectedAdmin, setSelectedAdmin] = useState<number | null>(null);
-  const [wordToUpdate, setWordToUpdate] = useState<number | null>(null);
+  const [wordIdToUpdate, setWordIdToUpdate] = useState<number | null>(null);
+  const [wordToUpdate, setWordToUpdate] = useState<string | null>(null);
+  const [wordDescriptionToUpdate, setWordDescriptionToUpdate] = useState<string | null>(null);
 
   // Fetch all words and administrators
   useEffect(() => {
@@ -24,11 +26,17 @@ function AdministratorList() {
   // Handle assigning admin to word
   const assignAdmin = () => {
     if (!selectedAdmin || !wordToUpdate) return;
+    const updatedAdmin = {
+      id: wordIdToUpdate,
+      word: wordToUpdate,
+      description: wordDescriptionToUpdate,
+      administrator: {"id": selectedAdmin}
+    }
 
-    fetch(`http://localhost:8080/word-admin/${wordToUpdate}`, {
+    fetch(`http://localhost:8080/word-admin/${wordIdToUpdate}`, {
       method: "PUT",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ administrator: selectedAdmin })
+      body: JSON.stringify({ updatedAdmin }),
+      headers: { "Content-Type": "application/json" }
     })
     .then(() => {
       // Refresh the list after update
@@ -53,7 +61,9 @@ function AdministratorList() {
                 <select 
                   onChange={(e) => {
                     setSelectedAdmin(Number(e.target.value));
-                    setWordToUpdate(item.id);
+                    setWordIdToUpdate(item.id);
+                    setWordDescriptionToUpdate(String(item.description))
+                    setWordToUpdate(String(item.word))
                   }}
                 >
                   <option value="">Select admin</option>
